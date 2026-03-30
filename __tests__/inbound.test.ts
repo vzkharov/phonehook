@@ -1,9 +1,9 @@
 import { expect, test } from "bun:test";
 
 import type { MessageReceivedPayload } from "~/clients/telnyx/schemas";
-import { formatInboundSmsForTelegram } from "~/utils/inbound";
+import { formatInboundMessage } from "~/utils/inbound";
 
-test("formatInboundSmsForTelegram includes from, to, and body", () => {
+test("formatInboundMessage includes from, to, and body", () => {
   const payload: MessageReceivedPayload = {
     id: "msg-1",
     record_type: "message",
@@ -13,7 +13,7 @@ test("formatInboundSmsForTelegram includes from, to, and body", () => {
     from: { phone_number: "+15550001" },
     to: [{ phone_number: "+15550002" }],
   };
-  const out = formatInboundSmsForTelegram(payload);
+  const out = formatInboundMessage(payload);
   expect(out).toContain("+15550001");
   expect(out).toContain("+15550002");
   expect(out).toContain("Hello world");

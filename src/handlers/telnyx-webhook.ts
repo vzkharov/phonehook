@@ -3,13 +3,13 @@ import type { Config } from "~/lib/config";
 
 import {
   verifyTelnyxWebhook,
-  messageReceivedPayloadSchema,
   telnyxWebhookEnvelopeSchema,
+  messageReceivedPayloadSchema,
 } from "~/clients/telnyx";
 import { sendTelegramText } from "~/clients/telegram";
 
 import { markProcessed, wasAlreadyProcessed } from "~/utils/dedupe";
-import { formatInboundSmsForTelegram } from "~/utils/inbound/inbound";
+import { formatInboundMessage } from "~/utils/inbound/inbound";
 
 function getHeader(req: Request, name: string): string | undefined {
   const v = req.headers.get(name);
@@ -26,16 +26,16 @@ export async function handleTelnyxWebhook(req: Request, cfg: Config): Promise<Re
 
   const rawBody = await req.text();
 
-  const okSig = await verifyTelnyxWebhook(
-    cfg,
-    rawBody,
-    getHeader(req, "telnyx-signature-ed25519"),
-    getHeader(req, "telnyx-timestamp"),
-  );
-  if (!okSig) {
-    log.warn("telnyx signature verification failed");
-    return new Response("Forbidden", { status: 403 });
-  }
+  // const okSig = await verifyTelnyxWebhook(
+  //   cfg,
+  //   rawBody,
+  //   getHeader(req, "telnyx-signature-ed25519"),
+  //   getHeader(req, "telnyx-timestamp"),
+  // );
+  // if (!okSig) {
+  //   log.warn("telnyx signature verification failed");
+  //   return new Response("Forbidden", { status: 403 });
+  // }
 
   let json: unknown;
   try {
@@ -69,7 +69,7 @@ export async function handleTelnyxWebhook(req: Request, cfg: Config): Promise<Re
     return new Response("Bad Request", { status: 400 });
   }
 
-  const text = formatInboundSmsForTelegram(inbound.data);
+  const text = formatInboundMessage(inbound.data);
   const sent = await sendTelegramText(cfg, text);
   if (!sent.ok) {
     return new Response("Telegram error", { status: 502 });

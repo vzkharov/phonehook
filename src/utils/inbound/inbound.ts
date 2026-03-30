@@ -1,6 +1,6 @@
 import type { MessageReceivedPayload } from "../../clients/telnyx/schemas";
 
-export function formatInboundSmsForTelegram(payload: MessageReceivedPayload): string {
+export function formatInboundMessage(payload: MessageReceivedPayload): string {
   const lines: string[] = [];
   lines.push("📩 Inbound SMS (Telnyx)");
   lines.push(`From: ${payload.from.phone_number}`);
