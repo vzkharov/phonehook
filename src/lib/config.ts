@@ -12,6 +12,10 @@ const envSchema = z.object({
     .string()
     .optional()
     .transform((v) => v === 'true' || v === '1'),
+  VIRTUALSMS_WEBHOOK_SECRET: z
+    .string()
+    .optional()
+    .transform((s) => (s?.trim() ? s.trim() : undefined)),
 });
 
 export type Config = z.infer<typeof envSchema>;
@@ -23,9 +27,11 @@ export function loadConfig(): Config {
     throw new Error(`Invalid environment: ${msg}`);
   }
   const cfg = parsed.data;
-  if (!cfg.SKIP_SIGNATURE_VERIFICATION && !cfg.TELNYX_PUBLIC_KEY) {
+  const telnyxReady = Boolean(cfg.TELNYX_PUBLIC_KEY) || cfg.SKIP_SIGNATURE_VERIFICATION;
+  const virtualsmsReady = Boolean(cfg.VIRTUALSMS_WEBHOOK_SECRET);
+  if (!telnyxReady && !virtualsmsReady) {
     throw new Error(
-      'Set TELNYX_PUBLIC_KEY (recommended for production) or SKIP_SIGNATURE_VERIFICATION=true only for local dev'
+      'Set TELNYX_PUBLIC_KEY or SKIP_SIGNATURE_VERIFICATION=true for Telnyx, or set VIRTUALSMS_WEBHOOK_SECRET for VirtualSMS.de webhooks.'
     );
   }
   return cfg;

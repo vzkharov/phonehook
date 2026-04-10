@@ -1,4 +1,5 @@
 import { handleTelnyxWebhook } from './handlers/telnyx-webhook';
+import { handleVirtualsmsWebhook } from './handlers/virtualsms-webhook';
 import { loadConfig } from './lib/config';
 import { log } from './lib/logger';
 
@@ -19,11 +20,15 @@ if (import.meta.main) {
           headers: { 'content-type': 'application/json' },
         }),
       '/webhooks/telnyx': (req) => handleTelnyxWebhook(req, cfg),
+      '/webhooks/virtualsmsde': (req) => handleVirtualsmsWebhook(req, cfg),
     },
     fetch() {
       return new Response('Not Found', { status: 404 });
     },
   });
 
-  log.info('phonehook listening', { port: server.port, webhookPath: '/webhooks/telnyx' });
+  log.info('phonehook listening', {
+    port: server.port,
+    webhooks: ['/webhooks/telnyx', '/webhooks/virtualsmsde'],
+  });
 }
