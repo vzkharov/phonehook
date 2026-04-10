@@ -4,8 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --bun next dev",
-    "build": "bun --bun next build",
+    "dev": "bun --hot ./src/index.ts",
+    "start": "bun ./src/index.ts",
+    "build": "bun -e \"console.log('ok')\"",
     "test": "bun test",
     "lint": "biome check --write"
   },

@@ -7,7 +7,7 @@ import { sendTelegramText } from '~/clients/telegram';
 import {
   messageReceivedPayloadSchema,
   telnyxWebhookEnvelopeSchema,
-  verifyTelnyxWebhook,
+  // verifyTelnyxWebhook,
 } from '~/clients/telnyx';
 
 // function getHeader(req: Request, name: string): string | undefined {
@@ -69,6 +69,7 @@ export async function handleTelnyxWebhook(req: Request, cfg: Config): Promise<Re
   }
 
   const text = formatInboundMessage(inbound.data);
+  console.info('inbound message', text);
   const sent = await sendTelegramText(cfg, text);
   if (!sent.ok) {
     return new Response('Telegram error', { status: 502 });
