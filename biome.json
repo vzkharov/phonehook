@@ -1,0 +1,187 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "useEditorconfig": true,
+    "includes": [
+      "**",
+      "!**/.idea",
+      "!**/.vscode",
+      "!**/.husky",
+      "!**/.git",
+      "!**/node_modules",
+      "!**/build"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "complexity": {
+        "noBannedTypes": "error",
+        "noUselessTypeConstraint": "error"
+      },
+      "correctness": {
+        "noChildrenProp": "error",
+        "noPrecisionLoss": "error",
+        "noUnusedVariables": "warn",
+        "useHookAtTopLevel": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtmlWithChildren": "error"
+      },
+      "style": {
+        "noInferrableTypes": "error",
+        "noNamespace": "error",
+        "noNonNullAssertion": "warn",
+        "useArrayLiterals": "error",
+        "useAsConstAssertion": "error",
+        "useBlockStatements": "off",
+        "useImportType": "error"
+      },
+      "suspicious": {
+        "noCommentText": "error",
+        "noDuplicateJsxProps": "error",
+        "noEmptyBlockStatements": "off",
+        "noExplicitAny": "off",
+        "noExtraNonNullAssertion": "error",
+        "noMisleadingInstantiator": "error",
+        "noNonNullAssertedOptionalChain": "error",
+        "useAdjacentOverloadSignatures": "error",
+        "useNamespaceKeyword": "error"
+      }
+    },
+    "includes": [
+      "**",
+      "!**/.idea",
+      "!**/.vscode",
+      "!**/.husky",
+      "!**/.git",
+      "!**/node_modules",
+      "!**/build"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
+  },
+  "html": {
+    "formatter": {
+      "indentScriptAndStyle": false,
+      "selfCloseVoidElements": "always"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noArguments": "error"
+          },
+          "correctness": {
+            "noConstAssign": "off",
+            "noGlobalObjectCalls": "off",
+            "noInvalidConstructorSuper": "off",
+            "noSetterReturn": "off",
+            "noUndeclaredVariables": "off",
+            "noUnreachable": "off",
+            "noUnreachableSuper": "off",
+            "useValidTypeof": "off"
+          },
+          "style": {
+            "useConst": "error"
+          },
+          "suspicious": {
+            "noDuplicateClassMembers": "off",
+            "noDuplicateObjectKeys": "off",
+            "noDuplicateParameters": "off",
+            "noFunctionAssign": "off",
+            "noImportAssign": "off",
+            "noRedeclare": "off",
+            "noUnsafeNegation": "off",
+            "noVar": "error",
+            "useGetterReturn": "off"
+          }
+        }
+      }
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [":BUN:", ":NODE:"],
+              ":BLANK_LINE:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              ["~/assets/**"],
+              ":BLANK_LINE:",
+              ["~/lib", "~/lib/**"],
+              ["~/api", "~/api/**"],
+              ["~/types", "~/enums", "~/types/**", "~/enums/**"],
+              ["~/constants", "~/utils", "~/constants/**", "~/utils/**"],
+              ":BLANK_LINE:",
+              ["~/hooks", "~/hooks/**"],
+              ["~/HOCs", "~/HOCs/**"],
+              ["~/features", "~/features/**"],
+              ["~/selectors", "~/selectors/**"],
+              ["~/components", "~/components/**"],
+              ":BLANK_LINE:",
+              ["~/modules", "~/modules/**"],
+              ":BLANK_LINE:",
+              ["~/routes", "~/routes/**", "~/pages", "~/pages/**", "~/layouts", "~/layouts/**"],
+              ":BLANK_LINE:",
+              "../../../../../../**",
+              ":BLANK_LINE:",
+              "../../../../../**",
+              ":BLANK_LINE:",
+              "../../../../**",
+              ":BLANK_LINE:",
+              "../../../**",
+              ":BLANK_LINE:",
+              "../../**",
+              ":BLANK_LINE:",
+              "../**",
+              ":BLANK_LINE:",
+              "!./*.module.css",
+              ":BLANK_LINE:",
+              "*.module.css"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

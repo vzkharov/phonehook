@@ -1,4 +1,4 @@
-type Level = "debug" | "info" | "warn" | "error";
+type Level = 'debug' | 'info' | 'warn' | 'error';
 
 function line(level: Level, msg: string, extra?: Record<string, unknown>) {
   const entry = {
@@ -11,8 +11,8 @@ function line(level: Level, msg: string, extra?: Record<string, unknown>) {
 }
 
 export const log = {
-  debug: (msg: string, extra?: Record<string, unknown>) => line("debug", msg, extra),
-  info: (msg: string, extra?: Record<string, unknown>) => line("info", msg, extra),
-  warn: (msg: string, extra?: Record<string, unknown>) => line("warn", msg, extra),
-  error: (msg: string, extra?: Record<string, unknown>) => line("error", msg, extra),
+  debug: (msg: string, extra?: Record<string, unknown>) => line('debug', msg, extra),
+  info: (msg: string, extra?: Record<string, unknown>) => line('info', msg, extra),
+  warn: (msg: string, extra?: Record<string, unknown>) => line('warn', msg, extra),
+  error: (msg: string, extra?: Record<string, unknown>) => line('error', msg, extra),
 };

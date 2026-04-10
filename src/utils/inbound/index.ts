@@ -1,1 +1,1 @@
-export * from './inbound'
+export * from './inbound';

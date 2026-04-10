@@ -4,11 +4,13 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run src/index.ts",
-    "dev": "bun --hot src/index.ts",
-    "test": "bun test"
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "test": "bun test",
+    "lint": "biome check --write"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.11",
     "@types/bun": "latest"
   },
   "peerDependencies": {

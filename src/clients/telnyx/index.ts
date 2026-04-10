@@ -1,2 +1,2 @@
-export * from "./schemas";
-export * from "./verify";
+export * from './schemas';
+export * from './verify';

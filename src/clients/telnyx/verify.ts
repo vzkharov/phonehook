@@ -1,5 +1,5 @@
-import { log } from "~/lib/logger";
-import type { Config } from "~/lib/config";
+import type { Config } from '~/lib/config';
+import { log } from '~/lib/logger';
 
 const MAX_SKEW_SEC = 300;
 
@@ -17,10 +17,10 @@ export async function verifyTelnyxWebhook(
   cfg: Config,
   rawBody: string,
   signatureB64: string | undefined,
-  timestampHeader: string | undefined,
+  timestampHeader: string | undefined
 ): Promise<boolean> {
   if (cfg.SKIP_SIGNATURE_VERIFICATION) {
-    log.warn("webhook signature verification skipped (SKIP_SIGNATURE_VERIFICATION)");
+    log.warn('webhook signature verification skipped (SKIP_SIGNATURE_VERIFICATION)');
     return true;
   }
   const publicKeyB64 = cfg.TELNYX_PUBLIC_KEY;
@@ -32,24 +32,24 @@ export async function verifyTelnyxWebhook(
   if (tsSec === null) return false;
   const nowSec = Math.floor(Date.now() / 1000);
   if (Math.abs(nowSec - tsSec) > MAX_SKEW_SEC) {
-    log.warn("telnyx timestamp outside allowed skew", { skewSec: Math.abs(nowSec - tsSec) });
+    log.warn('telnyx timestamp outside allowed skew', { skewSec: Math.abs(nowSec - tsSec) });
     return false;
   }
 
-  let publicKeyBytes: Buffer;
+  let publicKeyBytes: Buffer<ArrayBuffer>;
   try {
-    publicKeyBytes = Buffer.from(publicKeyB64, "base64");
+    publicKeyBytes = Buffer.from(publicKeyB64, 'base64');
   } catch {
     return false;
   }
   if (publicKeyBytes.length !== 32) {
-    log.error("TELNYX_PUBLIC_KEY must decode to 32 bytes (raw Ed25519 public key)");
+    log.error('TELNYX_PUBLIC_KEY must decode to 32 bytes (raw Ed25519 public key)');
     return false;
   }
 
-  let sig: Buffer;
+  let sig: Buffer<ArrayBuffer>;
   try {
-    sig = Buffer.from(signatureB64, "base64");
+    sig = Buffer.from(signatureB64, 'base64');
   } catch {
     return false;
   }
@@ -58,22 +58,18 @@ export async function verifyTelnyxWebhook(
 
   let cryptoKey: CryptoKey;
   try {
-    cryptoKey = await crypto.subtle.importKey(
-      "raw",
-      publicKeyBytes,
-      { name: "Ed25519" },
-      false,
-      ["verify"],
-    );
+    cryptoKey = await crypto.subtle.importKey('raw', publicKeyBytes, { name: 'Ed25519' }, false, [
+      'verify',
+    ]);
   } catch (e) {
-    log.error("failed to import Ed25519 public key", { err: String(e) });
+    log.error('failed to import Ed25519 public key', { err: String(e) });
     return false;
   }
 
   try {
-    return await crypto.subtle.verify({ name: "Ed25519" }, cryptoKey, sig, signedPayload);
+    return await crypto.subtle.verify({ name: 'Ed25519' }, cryptoKey, sig, signedPayload);
   } catch (e) {
-    log.error("signature verify threw", { err: String(e) });
+    log.error('signature verify threw', { err: String(e) });
     return false;
   }
 }
